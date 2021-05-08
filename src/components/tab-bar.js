@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 import Button from './button';
 import Box from './box';
@@ -18,12 +18,10 @@ function TabBar({ state, descriptors, navigation }) {
     <View style={{ flexDirection: 'row' }}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
+        const optionTitle =
+          options.title !== undefined ? options.title : route.name;
         const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
+          options.tabBarLabel !== undefined ? options.tabBarLabel : optionTitle;
 
         const isFocused = state.index === index;
 
@@ -38,6 +36,8 @@ function TabBar({ state, descriptors, navigation }) {
             navigation.navigate(route.name);
           }
         };
+
+        const bgColor = isFocused ? 'red' : 'white';
 
         return label === 'Search' ? (
           <Box key={label} p={15} mt={-15} bg="white" borderRadius="full">
@@ -54,9 +54,13 @@ function TabBar({ state, descriptors, navigation }) {
             flexDirection="column"
             onPress={onPress}
           >
-            {label === 'History' && <RotateCcw stroke={theme.colors.gray} />}
-            {label === 'Favorite' && <Bookmark stroke={theme.colors.gray} />}
-            <Box size={3} bg={isFocused ? 'red' : 'white'} mt={6} />
+            {label === 'History' && (
+              <RotateCcw color={theme.colors.textLight} />
+            )}
+            {label === 'Favorite' && (
+              <Bookmark color={theme.colors.textLight} />
+            )}
+            <Box size={3} bg={bgColor} mt={6} />
           </Button>
         );
       })}

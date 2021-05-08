@@ -9,10 +9,11 @@ import {
   layout,
   radii,
   borderRadius,
+  position,
 } from 'styled-system';
 
 const Button = styled(TouchableOpacity)(
-  compose(color, size, space, flexbox, layout, radii, borderRadius),
+  compose(color, size, space, flexbox, layout, radii, borderRadius, position),
 );
 
 Button.defaultProps = {

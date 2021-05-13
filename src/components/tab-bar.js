@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
 
 import Button from './button';
 import Box from './box';
@@ -8,14 +7,16 @@ import { Search, Bookmark, RotateCcw } from './icons';
 import theme from '../utils/theme';
 
 function TabBar({ state, descriptors, navigation }) {
-  const focusedOptions = descriptors[state.routes[state.index].key].options;
-
-  if (focusedOptions.tabBarVisible === false) {
-    return null;
-  }
-
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <Box
+      flexDirection="row"
+      bg="white"
+      style={{
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowRadius: 20,
+      }}
+    >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const optionTitle =
@@ -55,16 +56,20 @@ function TabBar({ state, descriptors, navigation }) {
             onPress={onPress}
           >
             {label === 'History' && (
-              <RotateCcw color={theme.colors.textLight} />
+              <RotateCcw
+                color={isFocused ? theme.colors.red : theme.colors.textLight}
+              />
             )}
             {label === 'Favorite' && (
-              <Bookmark color={theme.colors.textLight} />
+              <Bookmark
+                color={isFocused ? theme.colors.red : theme.colors.textLight}
+              />
             )}
-            <Box size={3} bg={bgColor} mt={6} />
+            <Box size={4} bg={bgColor} mt={6} borderRadius="full" />
           </Button>
         );
       })}
-    </View>
+    </Box>
   );
 }
 

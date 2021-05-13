@@ -9,9 +9,13 @@ import { Search as SearchIcon, Close } from './icons';
 import theme from '../utils/theme';
 import Button from './button';
 
-function Search() {
+function Search({ onChangeFocus }) {
   const [isFocus, setFocus] = React.useState(false);
   const [value, setValue] = React.useState('');
+
+  React.useEffect(() => {
+    onChangeFocus(isFocus);
+  }, [isFocus, onChangeFocus]);
 
   const handleCancel = () => {
     setFocus(false);
@@ -24,10 +28,7 @@ function Search() {
 
   return (
     <Box flexDirection="row" alignItems="center">
-      <Box position="relative" flex={1}>
-        <Button position="absolute" zIndex={1} left={16} top={14}>
-          <SearchIcon color={theme.colors.textMedium} />
-        </Button>
+      <Box position="relative" flex={1} elevation={1}>
         <Input
           style={{
             shadowColor: '#000',
@@ -51,6 +52,7 @@ function Search() {
           onFocus={() => setFocus(true)}
           onChangeText={(text) => setValue(text)}
         />
+
         {value !== '' && (
           <Button
             onPress={handleClear}
@@ -62,6 +64,10 @@ function Search() {
             <Close color={theme.colors.textDark} />
           </Button>
         )}
+
+        <Button position="absolute" left={16} top={14}>
+          <SearchIcon color={theme.colors.textMedium} />
+        </Button>
       </Box>
       {isFocus && (
         <Button onPress={() => handleCancel()} px={15} h={52}>

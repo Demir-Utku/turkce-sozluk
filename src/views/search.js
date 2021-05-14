@@ -1,38 +1,44 @@
 import * as React from 'react';
-import {
-  ImageBackground,
-  Platform,
-  StatusBar,
-  Text,
-  Animated,
-} from 'react-native';
+import { Platform, StatusBar } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { useFocusEffect } from '@react-navigation/native';
 
 import Box from '../components/box';
-import SearchComponent from '../components/search';
+import SuggestionCard from '../components/suggestion-card';
+import SearchHistoryList from '../components/search-history-list';
+import Header from '../components/header';
 
-import { Logo } from '../components/icons';
+const DATA = [
+  {
+    id: '1',
+    title: 'First Item 1',
+    summary: 'açıklama 1',
+  },
+  {
+    id: '2',
+    title: 'First Item 2',
+    summary: 'açıklama 2',
+  },
+  {
+    id: '3',
+    title: 'First Item 3',
+    summary: 'açıklama 3',
+  },
+];
 
-import bg from '../assets/bg.jpg';
-
-function Search() {
-  const [heroHeight] = React.useState(new Animated.Value(285));
+function Search({ navigation }) {
   const [isSearchFocus, setSearchFocus] = React.useState(false);
+  const [homeData, setHomeData] = React.useState(null);
+
+  const getHomeData = async () => {
+    const response = await fetch('https://sozluk.gov.tr/icerik');
+    const data = await response.json();
+    setHomeData(data);
+  };
 
   React.useEffect(() => {
-    if (isSearchFocus) {
-      Animated.timing(heroHeight, {
-        toValue: 52 + 32,
-        duration: 250,
-      }).start();
-    } else {
-      Animated.timing(heroHeight, {
-        toValue: 285,
-        duration: 250,
-      }).start();
-    }
-  }, [isSearchFocus, heroHeight]);
+    getHomeData().then((r) => r.json());
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -44,45 +50,36 @@ function Search() {
   return (
     <Box as={SafeAreaView} bg={isSearchFocus ? 'softRed' : 'red'} flex={1}>
       {/* Header */}
-      <Box
-        as={Animated.View}
-        position="relative"
-        zIndex={1}
-        height={heroHeight}
-      >
-        {!isSearchFocus && (
-          <Box
-            as={ImageBackground}
-            source={bg}
-            style={{ width: '100%', height: '100%' }}
-          >
-            {/* Logo */}
-            <Box flex={1} alignItems="center" justifyContent="center">
-              <Logo width={120} color="white" />
-            </Box>
-          </Box>
-        )}
-        {/* Search */}
-        <Box
-          position="absolute"
-          left={0}
-          bottom={isSearchFocus ? 0 : -42}
-          width="100%"
-          p={16}
-        >
-          <SearchComponent onChangeFocus={(status) => setSearchFocus(status)} />
-        </Box>
-      </Box>
+      <Header isSearchFocus={isSearchFocus} onSearchFocus={setSearchFocus} />
 
       {/* Content */}
-      <Box flex={1} bg="white" pt={isSearchFocus ? 0 : 26}>
+      <Box flex={1} bg="softRed" pt={isSearchFocus ? 0 : 26}>
         {isSearchFocus ? (
-          <Box p={30} flex={1}>
-            <Text>Geçmiş</Text>
+          <Box flex={1}>
+            <SearchHistoryList data={DATA} />
           </Box>
         ) : (
-          <Box p={30} flex={1}>
-            <Text>Öneri</Text>
+          <Box px={16} py={40} flex={1}>
+            <SuggestionCard
+              data={homeData?.kelime[0]}
+              title="Bir Kelime"
+              onPress={() => {
+                navigation.navigate('Detail', {
+                  keyword: homeData?.kelime[0]?.madde,
+                });
+              }}
+            />
+
+            <SuggestionCard
+              mt={40}
+              data={homeData?.atasoz[0]}
+              title="Bir Deyim - Atasözü"
+              onPress={() => {
+                navigation.navigate('Detail', {
+                  keyword: homeData?.atasoz[0]?.madde,
+                });
+              }}
+            />
           </Box>
         )}
       </Box>

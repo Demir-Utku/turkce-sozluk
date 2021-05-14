@@ -5,10 +5,13 @@ import {
   color,
   size,
   space,
+  border,
   flexbox,
   borderRadius,
 } from 'styled-system';
 
-const Box = styled(View)(compose(color, size, space, flexbox, borderRadius));
+const Box = styled(View)(
+  compose(color, size, space, border, flexbox, borderRadius),
+);
 
 export default Box;

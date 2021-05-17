@@ -59,7 +59,7 @@ function Search({ navigation }) {
             <SearchHistoryList data={DATA} />
           </Box>
         ) : (
-          <Box px={16} py={40} flex={1}>
+          <Box px={18} py={28} flex={1}>
             <SuggestionCard
               data={homeData?.kelime[0]}
               title="Bir Kelime"

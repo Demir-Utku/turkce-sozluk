@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 
 import Button from './button';
 import Box from './box';
@@ -11,6 +12,7 @@ function TabBar({ state, descriptors, navigation }) {
     <Box
       flexDirection="row"
       bg="white"
+      mb={Platform.OS === 'android' ? -15 : 0}
       style={{
         shadowColor: '#000',
         shadowOpacity: 0.1,

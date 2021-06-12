@@ -4,16 +4,17 @@ on:
     branches:
       - master
 jobs:
-  install-and-test:
+  install-and-build-npm:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install npm dependencies
+      - name: Install npm dependencies and build
         run: |
           npm install
-  # Second Job
-  build-android:
-    needs: install-and-test
+          npm run build
+          
+  build-android-and-test:
+    needs: install-and-build-npm
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,9 +24,10 @@ jobs:
       - name: Make Gradlew Executable
         run: cd android && chmod +x ./gradlew
         # Build Command
-      - name: Build Android Release
+      - name: Build Android Release and test
         run: |
           cd android && ./gradlew assembleRelease
+          ./gradlew test
       # Upload to Artifact
       - name: Upload Artifact
         uses: actions/upload-artifact@v1

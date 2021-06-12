@@ -33,17 +33,10 @@ jobs:
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/
-          
-  deploy:
-    needs: build-android-and-test
-    runs-on: ubuntu-latest
-    steps:
       - name: Deploy to GitHub Pages
-        if: success()
         uses: crazy-max/ghaction-github-pages@v2
         with:
           target_branch: gh-pages
           build_dir: android/app/build/outputs/apk/release/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    

@@ -2,7 +2,7 @@
 
 # Turkish Dictionary
 
-This is an unofficial TDK Turkish dictionary mobile app using React Native. The design is based on Feyza Nur Demirci and Şahin Abut's Figma document with some changes.
+This is an unofficial TDK Turkish dictionary mobile app using React Native. The design is based on Feyza Nur Demirci and Şahin Abut's [Figma document](https://www.figma.com/file/JqpfJNo6eEJzPpTOEi3Irt/TDK-Redesign?node-id=230%3A1801) with some changes.
 
 ---
 **NOTE:**
@@ -10,8 +10,6 @@ This is an unofficial TDK Turkish dictionary mobile app using React Native. The 
 The development of this application will continue.
 
 ---
-
-[Figma document](https://www.figma.com/file/JqpfJNo6eEJzPpTOEi3Irt/TDK-Redesign?node-id=230%3A1801)
 
 ## Application Structure
 
@@ -25,7 +23,7 @@ Also, created `src/utils/theme.js` file to specify sizes, colors, and radii to s
 
 Navigation was handled in `src/navigation.js` file. 
 
-## Used Libraries
+## Libraries
 
 [React Navigation](https://reactnavigation.org)
 

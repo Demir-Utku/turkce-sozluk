@@ -4,13 +4,6 @@
 
 This is an unofficial TDK Turkish dictionary mobile app using React Native. The design is based on Feyza Nur Demirci and Şahin Abut's [Figma document](https://www.figma.com/file/JqpfJNo6eEJzPpTOEi3Irt/TDK-Redesign?node-id=230%3A1801) with some changes.
 
----
-**NOTE:**
-
-The development of this application will continue.
-
----
-
 ## Application Structure
 
 The icons from the design were exported as svg in `src/icons` folder. Using SVGR, the components for corresponding icons were created in `src/components/icons` folder.
